@@ -60,7 +60,6 @@ class _listDestinyState extends State<Listadedestino> {
                         Navigator.pop(context);
                       } else {
                         Navigator.pop(context);
-                        //Exibir snackbar de erro
                         ScaffoldMessenger.of(scaffoldContext).showSnackBar(
                             const SnackBar(
                                 content:
