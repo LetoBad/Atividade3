@@ -67,6 +67,7 @@ class _CalcScreenState extends State<Calculadora> {
                       const SizedBox(height: 40),
                       const Text("Defina los precios"),
                       const SizedBox(height: 40),
+                      // Gasolina comum
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -84,6 +85,7 @@ class _CalcScreenState extends State<Calculadora> {
                         ],
                       ),
                       const SizedBox(height: 20),
+                      // Gasolina Podium
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -131,6 +133,7 @@ class _CalcScreenState extends State<Calculadora> {
         });
   }
 
+  //METODO PARA CALCULAR CUSTOS DA VIAGEM
   void calcularCusto() {
     if (_carroSelecionado != null && _destinoSelecionado != null) {
       Carro carro =
@@ -138,8 +141,10 @@ class _CalcScreenState extends State<Calculadora> {
       Destino destino = widget.destinos
           .firstWhere((dest) => dest.Ciudad == _destinoSelecionado);
 
+      //Calcular quantidade de Litros necessarios
       double litrosNecessarios = destino.distancia / carro.autonomia;
 
+      //Calcula o custo para os combustiveis
       setState(() {
         _custoComum = litrosNecessarios * precoGasolinaComum;
         _custopodium = litrosNecessarios * precoPodium;
@@ -152,6 +157,7 @@ class _CalcScreenState extends State<Calculadora> {
     return Scaffold(
       body: Column(
         children: [
+          // Container com as variáveis
           Container(
             margin: const EdgeInsets.fromLTRB(25, 25, 25, 25),
             decoration: BoxDecoration(
@@ -174,6 +180,7 @@ class _CalcScreenState extends State<Calculadora> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text("Comum"),
+                      // Preço atualizado da gasolina comum
                       Text(precoGasolinaComum.toString()),
                     ],
                   ),
@@ -181,6 +188,7 @@ class _CalcScreenState extends State<Calculadora> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text("Podium"),
+                      // Preço atualizado do Podium
                       Text(precoPodium.toString()),
                     ],
                   ),
@@ -188,6 +196,7 @@ class _CalcScreenState extends State<Calculadora> {
               ),
             ),
           ),
+          // Container de 'Calcular' com dropdown
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

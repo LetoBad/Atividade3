@@ -18,15 +18,18 @@ class Listadecarros extends StatefulWidget {
 }
 
 class _listCarsState extends State<Listadecarros> {
+//CONTROLADORES NOME E KM
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _kmController = TextEditingController();
+
+  //METODO PARA ABRIR MODAL
   void openModal(BuildContext scaffoldContext) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(0),
+            top: Radius.circular(0), // Remove cantos arredondados
           ),
         ),
         builder: (BuildContext context) {
@@ -48,21 +51,28 @@ class _listCarsState extends State<Listadecarros> {
                 ElevatedButton(
                   child: const Text("Salvar"),
                   onPressed: () {
+                    //Variaveis para receber os valores dos controllers
                     final String nome = _nomeController.text;
                     final double? km = double.tryParse(_kmController.text);
 
                     if (nome.isNotEmpty && km != null) {
+                      //Inserir carro com os valores recebidos
                       widget.onInsert(Carro(marca: nome, autonomia: km));
 
+                      //Limpar formulario
                       _nomeController.clear();
                       _kmController.clear();
 
+                      //Fechar modal
                       Navigator.pop(context);
 
+                      // Exibir snackbar de sucesso
                       ScaffoldMessenger.of(scaffoldContext).showSnackBar(
-                          const SnackBar(content: Text("Carro adicionado!")));
+                          const SnackBar(
+                              content: Text("Carro adicionado com sucesso!")));
                     } else {
                       Navigator.pop(context);
+                      //Exibir snackbar de erro
                       ScaffoldMessenger.of(scaffoldContext).showSnackBar(
                           const SnackBar(
                               content:
