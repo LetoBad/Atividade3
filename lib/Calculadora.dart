@@ -139,7 +139,7 @@ class _CalcScreenState extends State<Calculadora> {
       Carro carro =
           widget.carros.firstWhere((car) => car.marca == _carroSelecionado);
       Destino destino = widget.destinos
-          .firstWhere((dest) => dest.Ciudad == _destinoSelecionado);
+          .firstWhere((dest) => dest.ciudad == _destinoSelecionado);
 
       //Calcular quantidade de Litros necessarios
       double litrosNecessarios = destino.distancia / carro.autonomia;
@@ -239,8 +239,8 @@ class _CalcScreenState extends State<Calculadora> {
                   value: _destinoSelecionado,
                   items: widget.destinos.map((Destino destino) {
                     return DropdownMenuItem<String>(
-                      value: destino.Ciudad,
-                      child: Text(destino.Ciudad),
+                      value: destino.ciudad,
+                      child: Text(destino.ciudad),
                     );
                   }).toList(),
                   onChanged: (String? novoDestino) {
