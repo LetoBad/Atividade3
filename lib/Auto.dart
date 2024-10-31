@@ -1,14 +1,11 @@
 class Carro {
-  int? id;
-  String marca = "";
-  double autonomia = 0;
+  final int? id;
+  final String marca;
+  final double autonomia;
 
-  Carro({
-  this.id,  
-  required this.marca, 
-  required this.autonomia});
+  Carro({this.id, required this.marca, required this.autonomia});
 
-Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'marca': marca,
@@ -16,12 +13,11 @@ Map<String, dynamic> toMap(){
     };
   }
 
-  factory Carro.fromMap(Map<String, dynamic> map){
-    return Carro(marca: map['marca'], 
-    id: map['id'],
-    autonomia: map['autonomia'], 
+  static Carro fromMap(Map<String, dynamic> map) {
+    return Carro(
+      id: map['id'],
+      marca: map['marca'],
+      autonomia: map['autonomia'],
     );
   }
-
-
 }

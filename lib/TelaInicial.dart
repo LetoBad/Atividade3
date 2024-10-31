@@ -1,8 +1,10 @@
 import 'package:calculadora/Auto.dart';
-import 'package:calculadora/Calculadora.dart';
 import 'package:calculadora/Destino.dart';
 import 'package:calculadora/ListaDeCarros.dart';
 import 'package:calculadora/ListaDeDestino.dart';
+import 'package:calculadora/Calculadora.dart';
+import 'package:calculadora/CarroDao.dart';
+import 'package:calculadora/DestinoDao.dart';
 import 'package:flutter/material.dart';
 
 class Telainicial extends StatefulWidget {
@@ -15,41 +17,47 @@ class Telainicial extends StatefulWidget {
 class _TelainicialState extends State<Telainicial> {
   int _indexSelecionado = 0;
 
-  final List<Carro> _carros = [
-    Carro(marca: "Porsche GT3 RS", autonomia: 11.0),
-    Carro(marca: "Audi R8", autonomia: 12.0),
-  ];
+  final CarroDao _carroDao = CarroDao();
+  final DestinoDao _destinoDao = DestinoDao();
+  List<Carro> _carros = [];
+  List<Destino> _destinos = [];
 
-  final List<Destino> _destinos = [
-    Destino(Ciudad: "Durazno", distancia: 300),
-    Destino(Ciudad: "Montevideo", distancia: 500)
-  ];
-
-  void _itemSelecionado(int index) {
-    setState(() {
-      _indexSelecionado = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _loadData(); // Cargar datos de la base de datos
   }
 
-  void _delCarro(int index) {
+  void _loadData() async {
+    _carros = await _carroDao.selectCarros(); // Recuperar carros
+    _destinos = await _destinoDao.selectDestinos(); // Recuperar destinos
+    setState(() {});
+  }
+
+  void _delCarro(int index) async {
+    await _carroDao.deleteCarro(_carros[index]); // Eliminar de la base de datos
     setState(() {
       _carros.removeAt(index);
     });
   }
 
-  void _insCarro(Carro newCarro) {
+  void _insCarro(Carro newCarro) async {
+    await _carroDao.insertCarro(newCarro); // Insertar en la base de datos
     setState(() {
       _carros.add(newCarro);
     });
   }
 
-  void _insDestino(Destino newDestino) {
+  void _insDestino(Destino newDestino) async {
+    await _destinoDao.insertDestino(newDestino); // Insertar en la base de datos
     setState(() {
       _destinos.add(newDestino);
     });
   }
 
-  void _delDestino(int index) {
+  void _delDestino(int index) async {
+    await _destinoDao
+        .deleteDestino(_destinos[index]); // Eliminar de la base de datos
     setState(() {
       _destinos.removeAt(index);
     });
@@ -95,7 +103,11 @@ class _TelainicialState extends State<Telainicial> {
         ],
         currentIndex: _indexSelecionado,
         selectedItemColor: Colors.lightGreen,
-        onTap: _itemSelecionado,
+        onTap: (index) {
+          setState(() {
+            _indexSelecionado = index;
+          });
+        },
       ),
     );
   }

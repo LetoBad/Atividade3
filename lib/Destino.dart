@@ -1,25 +1,23 @@
 class Destino {
-  int? id;
-  String Ciudad = "";
-  double distancia = 0;
+  final int? id;
+  final String ciudad;
+  final double distancia;
 
-  Destino({
-    this.id,
-    required this.Ciudad, required this.distancia});
+  Destino({this.id, required this.ciudad, required this.distancia});
 
-Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'Ciudad': Ciudad,
-      'Distancia': distancia,
+      'ciudad': ciudad,
+      'distancia': distancia,
     };
   }
 
-  factory Destino.fromMap(Map<String, dynamic> map){
-    return Destino(Ciudad: map['Ciudad'], 
-    id: map['id'],
-    distancia: map['distancia'], 
+  static Destino fromMap(Map<String, dynamic> map) {
+    return Destino(
+      id: map['id'],
+      ciudad: map['ciudad'],
+      distancia: map['distancia'],
     );
   }
-
 }
